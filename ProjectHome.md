@@ -1,0 +1,4 @@
+Supports native calling of COM interfaces, passing structures as well as primitive data types in both directions. Does NOT support IDispatch.  All calls are made through the VTable
+
+
+Despite it being a total abomination that sucks beyond belief, sometimes you just have to call an API that is only available via Microsoft's Component Object Model.  This library allows you to do that from Java without the need for writing any native code.  Com4JNA uses the JNA library to bridge the gap between Java and native methods.  All you need to do is make a standard Java interface and annotate it with interface IDs and VTable offsets.
