@@ -7,49 +7,21 @@ package com.sun.jna.platform.win32.jnacom;
 
 import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.platform.win32.Shell32;
-import com.sun.jna.platform.win32.W32Errors;
 import com.sun.jna.ptr.PointerByReference;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
-/**
- *
- * @author scott.palmer
- */
+/** @author scott.palmer */
 public class COMTest {
 
-    public COMTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @Test
-    public void testInitializeCOM() {
+    @Test public void testInitializeCOM() {
         assertFalse(ComObject.isComInitialized());
         ComObject.initializeCOM();
         assertTrue(ComObject.isComInitialized());
     }
 
-    @Test
-    public void testDispose() {
+    @Test public void testDispose() {
         System.out.println("dispose");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
@@ -64,8 +36,7 @@ public class COMTest {
         fail("A NPE should have been thrown after the interface was disposed.");
     }
 
-    @Test
-    public void testAddRefRelease() {
+    @Test public void testAddRefRelease() {
         System.out.println("addRef/release");
         ComObject.initializeCOM();
         IUnknown iUnknown = ComObject.createInstance(IUnknown.class, "{6BF52A52-394A-11D3-B153-00C04F79FAA6}");
@@ -85,11 +56,8 @@ public class COMTest {
         //assertTrue(iUnknown.release() == 0);
     }
 
-    /**
-     * Test of queryInterface method, of class IUnknown.
-     */
-    @Test
-    public void testQueryInterface() {
+    /** Test of queryInterface method, of class IUnknown. */
+    @Test public void testQueryInterface() {
         System.out.println("queryInterface");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
@@ -104,8 +72,7 @@ public class COMTest {
     }
 
 
-    @Test
-    public void testCreateInstance() {
+    @Test public void testCreateInstance() {
         System.out.println("createInstance");
         ComObject.initializeCOM();
         // Make an instance of Windows Media Player 7, 9, or 10
@@ -115,11 +82,8 @@ public class COMTest {
         sample.dispose();
     }
 
-    /**
-     * Test of copy method, of class ComObject.
-     */
-    @Test
-    public void testCopy() {
+    /** Test of copy method, of class ComObject. */
+    @Test public void testCopy() {
         System.out.println("copy");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
@@ -142,8 +106,7 @@ public class COMTest {
         sample.dispose();
     }
 
-    @Test
-    public void testCreateComThread() throws InterruptedException {
+    @Test public void testCreateComThread() throws InterruptedException {
         System.out.println("createComThread");
         final boolean [] success = new boolean[1];
         Thread t = ComObject.createComThread(new Runnable() {
@@ -155,5 +118,4 @@ public class COMTest {
         t.join();
         assertTrue(success[0]);
     }
-
 }
