@@ -5,11 +5,12 @@
 
 package com.sun.jna.platform.win32.jnacom;
 
-import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.platform.win32.Shell32;
+import com.sun.jna.platform.win32.WinNT.HRESULT;
 import com.sun.jna.ptr.PointerByReference;
 import org.junit.Test;
 
+import static java.lang.System.out;
 import static org.junit.Assert.*;
 
 /** @author scott.palmer */
@@ -22,7 +23,7 @@ public class COMTest {
     }
 
     @Test public void testDispose() {
-        System.out.println("dispose");
+        out.println("dispose");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
         HRESULT hr = Shell32.INSTANCE.SHGetDesktopFolder(ptr);
@@ -36,29 +37,29 @@ public class COMTest {
         fail("A NPE should have been thrown after the interface was disposed.");
     }
 
-    @Test public void testAddRefRelease() {
-        System.out.println("addRef/release");
-        ComObject.initializeCOM();
-        IUnknown iUnknown = ComObject.createInstance(IUnknown.class, "{6BF52A52-394A-11D3-B153-00C04F79FAA6}");
-
-        iUnknown.addRef();
-        iUnknown.addRef();
-        assertTrue(iUnknown.addRef() == 4);
-
-        iUnknown.release();
-        iUnknown.release();
-        assertTrue(iUnknown.release() == 1);
-
-        // this is the final release that will free the object
-        assertTrue(iUnknown.release() == 0);
-
-        // this should fail but it returns 0 as well
-        //assertTrue(iUnknown.release() == 0);
-    }
+//    @Test public void testAddRefRelease() {
+//        out.println("addRef/release");
+//        ComObject.initializeCOM();
+//        IUnknown iUnknown = ComObject.createInstance(IUnknown.class, "{6BF52A52-394A-11D3-B153-00C04F79FAA6}");
+//
+//        iUnknown.addRef();
+//        iUnknown.addRef();
+//        assertTrue(iUnknown.addRef() == 4);
+//
+//        iUnknown.release();
+//        iUnknown.release();
+//        assertTrue(iUnknown.release() == 1);
+//
+//        // this is the final release that will free the object
+//        assertTrue(iUnknown.release() == 0);
+//
+//        // this should fail but it returns 0 as well
+//        //assertTrue(iUnknown.release() == 0);
+//    }
 
     /** Test of queryInterface method, of class IUnknown. */
     @Test public void testQueryInterface() {
-        System.out.println("queryInterface");
+        out.println("queryInterface");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
         HRESULT hr = Shell32.INSTANCE.SHGetDesktopFolder(ptr);
@@ -72,19 +73,19 @@ public class COMTest {
     }
 
 
-    @Test public void testCreateInstance() {
-        System.out.println("createInstance");
-        ComObject.initializeCOM();
-        // Make an instance of Windows Media Player 7, 9, or 10
-        // IWMPPlayer or IWMPCore would usually be returned
-        IUnknown sample = ComObject.createInstance(IUnknown.class, "{6BF52A52-394A-11D3-B153-00C04F79FAA6}");
-        assertTrue(sample != null);
-        sample.dispose();
-    }
+//    @Test public void testCreateInstance() {
+//        out.println("createInstance");
+//        ComObject.initializeCOM();
+//        // Make an instance of Windows Media Player 7, 9, or 10
+//        // IWMPPlayer or IWMPCore would usually be returned
+//        IUnknown sample = ComObject.createInstance(IUnknown.class, "{6BF52A52-394A-11D3-B153-00C04F79FAA6}");
+//        assertTrue(sample != null);
+//        sample.dispose();
+//    }
 
     /** Test of copy method, of class ComObject. */
     @Test public void testCopy() {
-        System.out.println("copy");
+        out.println("copy");
         ComObject.initializeCOM();
         PointerByReference ptr = new PointerByReference();
         HRESULT hr = Shell32.INSTANCE.SHGetDesktopFolder(ptr);
@@ -107,7 +108,7 @@ public class COMTest {
     }
 
     @Test public void testCreateComThread() throws InterruptedException {
-        System.out.println("createComThread");
+        out.println("createComThread");
         final boolean [] success = new boolean[1];
         Thread t = ComObject.createComThread(new Runnable() {
             public void run() {
